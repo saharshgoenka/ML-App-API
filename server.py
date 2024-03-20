@@ -5,7 +5,7 @@ import io
 app = Flask(__name__)
 
 # Replace with the server's IP address
-server_ip = "129.219.60.5"  # Replace with the actual IP address
+server_ip = "0.0.0.0"  # Replace with the actual IP address
 
 @app.route('/send_message', methods=['POST'])
 def send_message():
