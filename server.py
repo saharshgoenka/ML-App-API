@@ -1,8 +1,12 @@
 from flask import Flask, request
 from PIL import Image
 import io
+import socket
 
 app = Flask(__name__)
+
+# Get the hostname of the server
+hostname = socket.gethostname()
 
 @app.route('/send_message', methods=['POST'])
 def send_message():
@@ -34,4 +38,4 @@ def analyze_image():
         return f"Error processing the image: {str(e)}", 500
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host=hostname)  # Use the hostname instead of 'localhost'
