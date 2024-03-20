@@ -1,12 +1,37 @@
-import socket
+from flask import Flask, request
+from PIL import Image
+import io
 
-serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-serversocket.bind(('localhost', 8090))
-serversocket.listen(2) # become a server socket, maximum 5 connections
+app = Flask(__name__)
 
-while True:
-    connection, address = serversocket.accept()
-    buf = connection.recv(64)
-    if len(buf) > 0:
-        print(buf)
-        # break
+@app.route('/send_message', methods=['POST'])
+def send_message():
+    message = request.form['message']
+    response = f"Received message: {message}"
+    return response
+
+@app.route('/analyze_image', methods=['POST'])
+def analyze_image():
+    # Check if a file was uploaded
+    if 'image' not in request.files:
+        return 'No image file was provided.', 400
+
+    file = request.files['image']
+
+    # Check if the file is empty or has an invalid extension
+    if file.filename == '':
+        return 'No image file was provided.', 400
+
+    # Process the image
+    try:
+        img = Image.open(file.stream)
+        width, height = img.size
+        format = img.format
+        mode = img.mode
+        response = f"Image details:\nWidth: {width}\nHeight: {height}\nFormat: {format}\nMode: {mode}"
+        return response
+    except Exception as e:
+        return f"Error processing the image: {str(e)}", 500
+
+if __name__ == '__main__':
+    app.run()

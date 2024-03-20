@@ -1,6 +1,12 @@
-import socket
+import requests
 
-clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+while True:
+    message = input("Enter a message (or 'q' to quit): ")
+    if message.lower() == 'q':
+        break
 
-clientsocket.connect(('localhost', 8090))
-clientsocket.send(b'Hi Adit')
+    url = 'http://localhost:5000/send_message'
+    data = {'message': message}
+    response = requests.post(url, data=data)
+
+    print(response.text)
