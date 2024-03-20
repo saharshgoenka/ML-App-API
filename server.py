@@ -1,12 +1,11 @@
 from flask import Flask, request
 from PIL import Image
 import io
-import socket
 
 app = Flask(__name__)
 
-# Get the hostname of the server
-hostname = socket.gethostname()
+# Replace with the server's IP address
+server_ip = "129.219.60.5"  # Replace with the actual IP address
 
 @app.route('/send_message', methods=['POST'])
 def send_message():
@@ -38,4 +37,4 @@ def analyze_image():
         return f"Error processing the image: {str(e)}", 500
 
 if __name__ == '__main__':
-    app.run(host=hostname)  # Use the hostname instead of 'localhost'
+    app.run(host=server_ip)  # Use the server's IP address
