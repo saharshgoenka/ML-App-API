@@ -37,4 +37,4 @@ def analyze_image():
         return f"Error processing the image: {str(e)}", 500
 
 if __name__ == '__main__':
-    app.run(host=server_ip, port=13433, debug=True)  # Use the server's IP address
+    app.run(host=server_ip, port=1111, debug=True)  # Use the server's IP address
